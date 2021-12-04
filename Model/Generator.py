@@ -9,9 +9,10 @@ def list_to_sequential(layer_list):
 
 
 class Generator(nn.Module):
-    def __init__(self, in_channels=3, out_channels=64, scaling_factor=4, num_residual_blocks=16):
+    def __init__(self, in_channels=3, scaling_factor=4, num_residual_blocks=16):
         super(Generator, self).__init__()                                                           # (in, out)
         num_upsampling_blocks = int(np.log2(scaling_factor))
+        out_channels = 64
         self.input_block = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=(9, 9),       # ( 3, 64)
                       stride=1, padding=4, bias=False),  # why padding=4??
