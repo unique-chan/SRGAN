@@ -38,9 +38,9 @@ class Generator(nn.Module):
         )
 
     def forward(self, x):
-        out = self.input_block(x)
-        out = self.residual_blocks(out)
-        out = self.intermediate_block(out)
+        _out = self.input_block(x)
+        out = self.residual_blocks(_out)
+        out = _out + self.intermediate_block(out)
         out = self.upsampling_blocks(out)
         out = self.output_block(out)
         return out
