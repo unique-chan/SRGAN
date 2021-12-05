@@ -16,3 +16,6 @@ tensorboard     # not mandatory
 
 ### Contribution
 If you find any bugs or have opinions for further improvements, feel free to contact me (yechankim@gm.gist.ac.kr). All contributions are welcome.
+
+### Reference
+1. https://github.com/eugenesiow/super-image-data (For dataset)
