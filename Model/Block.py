@@ -50,3 +50,7 @@ class ConvBlock(nn.Module):  # for Discriminator
 
     def forward(self, x):
         return self.block(x)
+
+
+def list_to_sequential(layer_list):
+    return nn.Sequential(*layer_list)
