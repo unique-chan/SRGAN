@@ -1,18 +1,14 @@
 from torch import nn
-from ConvBlock import ConvBlock
-import numpy as np
-
-
-def list_to_sequential(layer_list):
-    return nn.Sequential(*layer_list)
+from Block import ConvBlock, list_to_sequential
 
 
 class Discriminator(nn.Module):
-    def __init__(self, in_channels=3, scaling_factor=4, num_residual_blocks=16):
+    def __init__(self, in_channels=3, conv_in_out_chs_strides=None):
         super(Discriminator, self).__init__()
-        in_features = 10  # <- i have to implement !!!
-        conv_in_out_chs_strides = [(in_channels, 64, 2), (64, 128, 1), (128, 128, 2),
-                                   (128, 256, 1), (256, 512, 1), (512, 512, 2)]
+        self.linear_width = 1024
+        if not conv_in_out_chs_strides:
+            conv_in_out_chs_strides = [(in_channels, 64, 2), (64, 128, 1), (128, 128, 2),
+                                       (128, 256, 1), (256, 512, 1), (512, 512, 2)]
         self.input_block = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=64, kernel_size=(3, 3),
                       stride=1, padding=1, bias=False),     # why padding = 1??
@@ -23,7 +19,7 @@ class Discriminator(nn.Module):
              for in_ch, out_ch, stride in conv_in_out_chs_strides]
         )
         self.output_block = nn.Sequential(
-            nn.Linear(in_features=in_features, out_features=1024),
+            nn.LazyLinear(out_features=self.linear_width),
             nn.LeakyReLU(0.2),
             nn.AdaptiveAvgPool2d(1),
             nn.Sigmoid()
@@ -32,5 +28,6 @@ class Discriminator(nn.Module):
     def forward(self, x):
         out = self.input_block(x)
         out = self.conv_blocks(out)
+        out = out.view(-1, self.linear_width)
         out = self.output_block(out)
         return out
