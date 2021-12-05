@@ -1,11 +1,7 @@
 from torch import nn
-from Block import ResidualBlock
+from Block import ResidualBlock, list_to_sequential
 from Block import UpsamlingBlock
 import numpy as np
-
-
-def list_to_sequential(layer_list):
-    return nn.Sequential(*layer_list)
 
 
 class Generator(nn.Module):
@@ -37,11 +33,12 @@ class Generator(nn.Module):
                       stride=1, padding=4, bias=False),
             # we might add extra non-linear activation here!
         )
+        self.short_cut = nn.Sequential()
 
     def forward(self, x):
-        _out = self.input_block(x)
-        out = self.residual_blocks(_out)
-        out = _out + self.intermediate_block(out)
+        identity = self.input_block(x)
+        out = self.residual_blocks(identity)
+        out = self.short_cut(identity) + self.intermediate_block(out)
         out = self.upsampling_blocks(out)
         out = self.output_block(out)
         return out
