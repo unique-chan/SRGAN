@@ -1,6 +1,6 @@
 from torch import nn
-from ResidualBlock import ResidualBlock
-from UpsamlingBlock import UpsamlingBlock
+from Block import ResidualBlock
+from Block import UpsamlingBlock
 import numpy as np
 
 
