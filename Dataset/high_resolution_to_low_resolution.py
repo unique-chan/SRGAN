@@ -27,8 +27,6 @@ os.makedirs(LR_dir, exist_ok=True)
 os.makedirs(LR_train_dir, exist_ok=True)
 os.makedirs(LR_valid_dir, exist_ok=True)
 
-print(f'[Created]\tLR_dir: {LR_dir}\n\t\tLR_train_dir: {LR_train_dir}\n\t\tLR_valid_dir: {LR_valid_dir}')
-
 LR_dirs = [LR_train_dir, LR_valid_dir]
 
 for i, cur_dir in enumerate([HR_train_dir, HR_valid_dir]):
@@ -47,3 +45,5 @@ for i, cur_dir in enumerate([HR_train_dir, HR_valid_dir]):
 
         lr_img = hr_img.resize((lr_w, lr_h), PIL.Image.ANTIALIAS)
         lr_img.save(f'{LR_p_dir}/{HR_files[j]}')
+
+print(f'[Created]\tLR_dir: {LR_dir}\n\t\tLR_train_dir: {LR_train_dir}\n\t\tLR_valid_dir: {LR_valid_dir}')
