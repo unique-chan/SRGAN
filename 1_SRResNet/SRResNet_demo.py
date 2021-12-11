@@ -16,7 +16,7 @@ if __name__ == '__main__':
     my_parser = Parser(mode='demo')
     my_args = my_parser.parser.parse_args()
 
-    print('[1_SRResNet] - Demo')
+    print('[SRResNet] - Demo')
 
     lr_img_path = my_args.input_img_path
     sr_img_path = my_args.output_img_path
