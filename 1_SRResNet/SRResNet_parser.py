@@ -3,7 +3,8 @@ import argparse
 
 class Parser:
     def __init__(self, mode):
-        self.parser = argparse.ArgumentParser(description='PyTorch 2_SRGAN (Yechan Kim / Unofficial Implementation)')
+        self.parser = argparse.ArgumentParser(description='PyTorch - SRResNet '
+                                                          '(Yechan Kim / Unofficial Implementation)')
         self.add_default_arguments()
         if mode == 'train':
             self.add_arguments_for_train()
