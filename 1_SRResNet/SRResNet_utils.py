@@ -47,7 +47,7 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
         train_loss.backward()
         g_optimizer.step()
 
-        train_tqdm_loader.set_description(f'Train-Generator | Epoch: {epoch + 1} | Loss: {train_mse / (i + 1): .4f}')
+        train_tqdm_loader.set_description(f'Train-SRResNet | Epoch: {epoch + 1} | Loss: {train_mse / (i + 1): .4f}')
 
         # tensorboard log
     train_mse /= len(train_tqdm_loader)
@@ -67,7 +67,7 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
             valid_loss = mse_loss(sr_img, hr_img)
             valid_mse += valid_loss.item()
 
-            valid_tqdm_loader.set_description(f'Valid-Generator | Epoch: {epoch + 1} | '
+            valid_tqdm_loader.set_description(f'Valid-SRResNet | Epoch: {epoch + 1} | '
                                               f'Loss: {valid_loss / (i + 1): .4f}')
 
     valid_mse /= len(valid_tqdm_loader)
