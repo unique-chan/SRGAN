@@ -21,7 +21,7 @@ if __name__ == '__main__':
     # Tag
     cur_time = datetime.datetime.now().strftime('%y-%m-%d-%H-%M-%S')
     tag_name = f'{my_args.tag}-{cur_time}' if my_args.tag else f'{cur_time}'
-    print('[1_SRResNet]')
+    print('[SRResNet]')
     print(f'{tag_name} experiment has been started.')
 
     # Parameter
@@ -57,9 +57,9 @@ if __name__ == '__main__':
             generator_best_model_state = generator.state_dict()
         db_losses['train'].append(train_mse)
         db_losses['valid'].append(valid_mse)
-    torch.save(generator_best_model_state, f'1_SRResNet-generator-{tag_name}.pt')
-    print(f'1_SRResNet-generator-{tag_name}.pt is stored.')
-    write_log_for_generator(db_losses, f'1_SRResNet-generator-{tag_name}-log.txt')
-    print(f'1_SRResNet-generator-{tag_name}-log.txt is stored.')
-    plot_log_for_generator(db_losses, f'1_SRResNet-generator-{tag_name}-log.png')
-    print(f'1_SRResNet-generator-{tag_name}-log.png is stored.')
+    torch.save(generator_best_model_state, f'SRResNet-generator-{tag_name}.pt')
+    print(f'SRResNet-generator-{tag_name}.pt is stored.')
+    write_log_for_generator(db_losses, f'SRResNet-generator-{tag_name}-log.txt')
+    print(f'SRResNet-generator-{tag_name}-log.txt is stored.')
+    plot_log_for_generator(db_losses, f'SRResNet-generator-{tag_name}-log.png')
+    print(f'SRResNet-generator-{tag_name}-log.png is stored.')
