@@ -7,15 +7,15 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-def write_log_for_generator(db_losses, file_name):
+def write_log_for_SRResNet(db_losses, file_name):
     f = open(file_name, 'w')
-    f.write('write_log_for_generator() \n\n')
+    f.write('write_log_for_SRResNet() \n\n')
     f.write(f"(1) training loss per each epoch ->\n{str(db_losses['train'])} \n\n")
     f.write(f"(2) validation loss per each epoch ->\n{str(db_losses['valid'])} \n")
     f.close()
 
 
-def plot_log_for_generator(db_losses, file_name):
+def plot_log_for_SRResNet(db_losses, file_name):
     plt.clf()
     plt.title(file_name)
     plt.plot(range(1, len(db_losses['train']) + 1), np.array(db_losses['train']), label='train_mse')
@@ -74,7 +74,3 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
     tensorboard_writer.add_scalar('Loss/valid', valid_mse, epoch + 1)
 
     return train_mse, valid_mse
-
-
-def train_discriminator():
-    pass
