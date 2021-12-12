@@ -6,6 +6,9 @@ import tqdm
 import numpy as np
 from matplotlib import pyplot as plt
 
+from ContentLoss.ResNetLoss import ResNetLoss
+from ContentLoss.VGGLoss import VGGLoss
+
 
 def write_log_for_SRResNet(db_losses, file_name):
     f = open(file_name, 'w')
@@ -25,9 +28,17 @@ def plot_log_for_SRResNet(db_losses, file_name):
 
 
 def train_and_validate_generator(generator, g_optimizer, epoch, device,
-                                 train_loader, valid_loader, tensorboard_writer):
+                                 train_loader, valid_loader, loss_function_name, tensorboard_writer):
     generator.to(device)
-    mse_loss = nn.MSELoss().to(device)
+    loss_function = nn.MSELoss().to(device)
+    if loss_function_name == 'vgg_loss_19_5_4':
+        loss_function = VGGLoss(i=5, j=4, vgg_model_name='vgg19_bn')
+    elif loss_function_name == 'res_loss_18_4':
+        loss_function = ResNetLoss(i=4, resnet_model_name='resnet18')
+    elif loss_function_name == 'res_loss_34_3':
+        loss_function = ResNetLoss(i=3, resnet_model_name='resnet34')
+    elif loss_function_name == 'res_loss_34_5':
+        loss_function = ResNetLoss(i=5, resnet_model_name='resnet34')
 
     # (1) train phase
     train_mse = 0
@@ -39,7 +50,7 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
 
         sr_img = generator(lr_img)
         # print('비교', hr_img.shape, sr_img.shape)
-        train_loss = mse_loss(sr_img, hr_img)
+        train_loss = loss_function(sr_img, hr_img)
         train_mse += train_loss.item()
 
         # optimization
@@ -64,7 +75,7 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
             hr_img = hr_img.to(device)
 
             sr_img = generator(lr_img)
-            valid_loss = mse_loss(sr_img, hr_img)
+            valid_loss = loss_function(sr_img, hr_img)
             valid_mse += valid_loss.item()
 
             valid_tqdm_loader.set_description(f'Valid-SRResNet | Epoch: {epoch + 1} | '

@@ -31,6 +31,8 @@ class Parser:
                                  help='High-resolution dataset dir')
         self.parser.add_argument('--tag', type=str,
                                  help='tag name for current experiment')
+        self.parser.add_argument('--loss_function', default='mse_loss', type=str,
+                                 help="['mse_loss'|'vgg_loss_19_5_4'|'res_loss_18_5_4'|'res_loss_34_5_4']")
         # self.parser.add_argument('--train_generator', action='store_true',
         #                          help='for training a generator!')
         # # for
