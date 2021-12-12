@@ -44,7 +44,7 @@ if __name__ == '__main__':
     g_optimizer = optim.Adam(generator.parameters(), lr=my_args.g_lr, betas=(0.9, 0.999))
     db_losses = {'train': [], 'valid': []}
     tensorboard_writer = SummaryWriter(f'./log_dir/{tag_name}')
-    for epoch in range(my_args.g_epochs):
+    for epoch in range(my_args.epochs):
         train_mse, valid_mse = \
             train_and_validate_generator(generator, g_optimizer, epoch, device,
                                          train_loader, valid_loader, my_args.loss_function, tensorboard_writer)

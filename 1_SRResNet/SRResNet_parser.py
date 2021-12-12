@@ -23,8 +23,8 @@ class Parser:
         # for training a generator!
         self.parser.add_argument('--g_lr', default=1e-4, type=float,
                                  help='initial learning rate for training a generator (default: 0.0001)')
-        self.parser.add_argument('--g_epochs', default=1, type=int,
-                                 help='training epochs for generator (default: 1)')
+        self.parser.add_argument('--epochs', default=1, type=int,
+                                 help='training epochs (default: 1)')
         self.parser.add_argument('--train_dir', type=str,
                                  help='Low-resolution dataset dir')
         self.parser.add_argument('--valid_dir', type=str,
