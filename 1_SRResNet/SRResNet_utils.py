@@ -49,8 +49,7 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
         hr_img = hr_img.to(device)
 
         sr_img = generator(lr_img)
-        # print('비교', hr_img.shape, sr_img.shape)
-        train_loss = loss_function(sr_img, hr_img)
+        train_loss = loss_function(hr_img, sr_img)
         train_mse += train_loss.item()
 
         # optimization
@@ -75,11 +74,11 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
             hr_img = hr_img.to(device)
 
             sr_img = generator(lr_img)
-            valid_loss = loss_function(sr_img, hr_img)
+            valid_loss = loss_function(hr_img, sr_img)
             valid_mse += valid_loss.item()
 
             valid_tqdm_loader.set_description(f'Valid-SRResNet | Epoch: {epoch + 1} | '
-                                              f'Loss: {valid_loss / (i + 1): .4f}')
+                                              f'Loss: {valid_mse / (i + 1): .4f}')
 
     valid_mse /= len(valid_tqdm_loader)
     tensorboard_writer.add_scalar('Loss/valid', valid_mse, epoch + 1)

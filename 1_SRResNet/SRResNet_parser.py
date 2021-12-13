@@ -33,14 +33,6 @@ class Parser:
                                  help='tag name for current experiment')
         self.parser.add_argument('--loss_function', default='mse_loss', type=str,
                                  help="['mse_loss'|'vgg_loss_19_5_4'|'res_loss_18_5_4'|'res_loss_34_5_4']")
-        # self.parser.add_argument('--train_generator', action='store_true',
-        #                          help='for training a generator!')
-        # # for
-        # self.parser.add_argument('--d_epochs', default=1, type=int,
-        #                          help='training epochs for discriminator (default: 1)')
-        #
-        # # self.parser.add_argument('--store', action='store_true',
-        # #                          help="store the best model during training")
 
     def add_arguments_for_test(self):
         pass
