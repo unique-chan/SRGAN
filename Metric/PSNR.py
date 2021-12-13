@@ -6,6 +6,6 @@ import numpy as np
 
 class PSNR:
     @staticmethod
-    def __call__(img1, img2):
-        mse = torch.mean(np.power(img1 - img2, 2))
+    def __call__(img_x, img_y):
+        mse = torch.mean(np.power(img_x - img_y, 2))
         return 10 * torch.log10(1. / mse).item()
