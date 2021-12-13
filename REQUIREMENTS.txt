@@ -1,8 +1,18 @@
+# datasets -> 삭제
 torch >= 1.10.0
 torchvision >= 0.11.1
-tqdm            # not mandatory
-tensorboard     # not mandatory
+glob2
+tqdm
+tensorboard
+matplotlib
+opencv-contrib-python
+#tensorboardx
+#tqdm            # not mandatory
+#tensorboard     # not mandatory
 # Ubuntu 20.04, 64bit, Cuda 11.2, Nvidia RTX-3090, Python 3.7
+# pip install datasets -> 삭제
 # pip install torch==1.10.0+cu111 torchvision==0.11.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+# pip install glob2
 # pip install tqdm==4.62.3
 # pip install tensorboard==2.7.0
+# pip install tensorboardx==2.4.1
