@@ -23,7 +23,7 @@ class SSIM:
 
     @staticmethod
     def _ssim(img_x, img_y):
-        c1, c2 = 0.01 ** 2, 0.03 ** 2
+        c1, c2 = np.power(0.01, 2), np.power(0.03, 2)
 
         img_x = img_x.astype(np.float64)
         img_y = img_y.astype(np.float64)
@@ -32,8 +32,8 @@ class SSIM:
 
         mu_x = cv2.filter2D(img_x, -1, window)[5:-5, 5:-5]
         mu_y = cv2.filter2D(img_y, -1, window)[5:-5, 5:-5]
-        mu_x_sq = mu_x ** 2
-        mu_y_sq = mu_y ** 2
+        mu_x_sq = np.power(mu_x, 2)
+        mu_y_sq = np.power(mu_y, 2)
         mu_x_mu_y = mu_x * mu_y
         sigma_x_sq = cv2.filter2D(img_x ** 2, -1, window)[5:-5, 5:-5] - mu_x_sq
         sigma_y_sq = cv2.filter2D(img_y ** 2, -1, window)[5:-5, 5:-5] - mu_y_sq
