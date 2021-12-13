@@ -1,5 +1,5 @@
 from torch import nn
-from Block import ConvBlock, list_to_sequential
+from Model.Block import ConvBlock, list_to_sequential
 
 
 class Discriminator(nn.Module):
@@ -7,7 +7,7 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
         self.linear_width = 1024
         if not conv_in_out_chs_strides:
-            conv_in_out_chs_strides = [(in_channels, 64, 2), (64, 128, 1), (128, 128, 2),
+            conv_in_out_chs_strides = [(64, 64, 2), (64, 128, 1), (128, 128, 2),
                                        (128, 256, 1), (256, 512, 1), (512, 512, 2)]
         self.input_block = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=64, kernel_size=(3, 3),

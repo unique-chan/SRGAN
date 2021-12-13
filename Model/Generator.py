@@ -1,6 +1,6 @@
 from torch import nn
-from Block import ResidualBlock, list_to_sequential
-from Block import UpsamlingBlock
+from Model.Block import ResidualBlock, list_to_sequential
+from Model.Block import UpsamlingBlock
 import numpy as np
 
 
