@@ -12,8 +12,8 @@ from torchvision.utils import save_image
 
 from Dataset.dataset import HR_to_HR_LR_PairDataset
 from Model.Generator import Generator
-from SRResNet_parser import Parser
-from SRResNet_utils import *
+from SRGAN_parser import Parser
+from SRGAN_utils import *
 
 
 if __name__ == '__main__':
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     my_parser = Parser(mode='demo')
     my_args = my_parser.parser.parse_args()
 
-    print('[SRResNet] - Demo')
+    print('[SRGAN] - Demo')
 
     lr_img_path = my_args.input_img_path
     sr_img_path = my_args.output_img_path

@@ -67,9 +67,8 @@ def train_and_validate_SRGAN(generator, g_optimizer, discriminator, d_optimizer,
         d_loss_real = bce_loss_function(d_i_hr, torch.ones_like(d_i_hr))    # Goal: D[I^{HR}]    ~= 1 (for real image)
         d_loss_fake = bce_loss_function(d_i_sr, torch.zeros_like(d_i_sr))   # Goal: D[G(I^{LR})] ~= 0 (for fake image)
         d_loss = d_loss_real + d_loss_fake      # maximize      E[log[D[I^{HR}]]] + E[log[(1 - D[G(I^{LR})])]]
-                                                # <=> maximize  E[log[D[I^{HR}]]] - E[log[D[G(I^{LR})]]]
                                                 # for PyTorch implementation (PyTorch only has a minimizer!!!),
-                                                # <=> minimize  - E[log[D[I^{HR}]]] + E[log[D[G(I^{LR})]]]
+                                                # <=> minimize  E[- log[D[I^{HR}]]] + E[- log[1 - D[G(I^{LR})]]]
         train_d_loss += d_loss.item()
         d_loss.backward(retain_graph=True)
         d_optimizer.step()
