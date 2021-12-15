@@ -1,11 +1,8 @@
-import torchvision.transforms
 from PIL import Image
 
 import glob
 from torch.utils.data import Dataset
 from torchvision.transforms import transforms, InterpolationMode
-
-# pil_to_tensor = transforms.ToTensor()
 
 
 class HR_to_HR_LR_PairDataset(Dataset):
@@ -42,8 +39,8 @@ class HR_to_HR_LR_PairDataset(Dataset):
     def __getitem__(self, idx):
         hr_img = self.HR_transforms(Image.open(self.img_files[idx]))
         lr_img = self.LR_transforms(hr_img)
-        # print('테스트', hr_img.shape, lr_img.shape)
         return lr_img, hr_img
+
 
 # [OLD VERSION]
 # class LR_HR_PairDataset(Dataset):
