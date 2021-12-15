@@ -5,13 +5,13 @@ import numpy as np
 
 
 class Generator(nn.Module):
-    def __init__(self, in_channels=3, scaling_factor=4, num_residual_blocks=16):
+    def __init__(self, in_channels=3, num_residual_blocks=16):
         super(Generator, self).__init__()                                                           # (in, out)
-        num_upsampling_blocks = int(np.log2(scaling_factor))
+        num_upsampling_blocks = 2
         out_channels = 64
         self.input_block = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=(9, 9),       # ( 3, 64)
-                      stride=1, padding=4, bias=False),  # why padding=4??
+                      stride=1, padding=4, bias=False),
             nn.PReLU()
         )
         self.residual_blocks = list_to_sequential(
