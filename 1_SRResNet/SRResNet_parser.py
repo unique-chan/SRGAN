@@ -20,22 +20,25 @@ class Parser:
                                  help='mini-batch size (default: 1)')
 
     def add_arguments_for_train(self):
-        # for training a generator!
         self.parser.add_argument('--g_lr', default=1e-4, type=float,
                                  help='initial learning rate for training a generator (default: 0.0001)')
         self.parser.add_argument('--epochs', default=1, type=int,
                                  help='training epochs (default: 1)')
         self.parser.add_argument('--train_dir', type=str,
-                                 help='Low-resolution dataset dir')
+                                 help='Train dataset dir')
         self.parser.add_argument('--valid_dir', type=str,
-                                 help='High-resolution dataset dir')
+                                 help='Valid dataset dir')
         self.parser.add_argument('--tag', type=str,
                                  help='tag name for current experiment')
         self.parser.add_argument('--loss_function', default='mse_loss', type=str,
                                  help="['mse_loss'|'vgg_loss_19_5_4'|'res_loss_18_5_4'|'res_loss_34_5_4']")
 
     def add_arguments_for_test(self):
-        pass
+        self.parser.add_argument('--generator_pt_path', type=str)
+        self.parser.add_argument('--LR_dir', type=str,
+                                 help='Low-resolution dataset dir')
+        self.parser.add_argument('--HR_dir', type=str,
+                                 help='High-resolution dataset dir')
 
     def add_arguments_for_demo(self):
         self.parser.add_argument('--input_img_path', type=str)

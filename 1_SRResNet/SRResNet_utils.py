@@ -30,15 +30,28 @@ def plot_log_for_SRResNet(db_losses, file_name):
 def train_and_validate_generator(generator, g_optimizer, epoch, device,
                                  train_loader, valid_loader, loss_function_name, tensorboard_writer):
     generator.to(device)
-    loss_function = nn.MSELoss().to(device)
-    if loss_function_name == 'vgg_loss_19_5_4':
-        loss_function = VGGLoss(i=5, j=4, vgg_model_name='vgg19_bn')
-    elif loss_function_name == 'res_loss_18_4':
-        loss_function = ResNetLoss(i=4, resnet_model_name='resnet18')
-    elif loss_function_name == 'res_loss_34_3':
-        loss_function = ResNetLoss(i=3, resnet_model_name='resnet34')
-    elif loss_function_name == 'res_loss_34_5':
-        loss_function = ResNetLoss(i=5, resnet_model_name='resnet34')
+    loss_function_1 = nn.MSELoss().to(device)
+    loss_function_name_1 = loss_function_name.split('+')[0]
+    if loss_function_name_1 == 'vgg_loss_19_5_4':
+        loss_function_1 = VGGLoss(i=5, j=4, device=device, vgg_model_name='vgg19_bn')
+    elif loss_function_name_1 == 'res_loss_18_4':
+        loss_function_1 = ResNetLoss(i=4, device=device, resnet_model_name='resnet18')
+    elif loss_function_name_1 == 'res_loss_34_3':
+        loss_function_1 = ResNetLoss(i=3, device=device, resnet_model_name='resnet34')
+    elif loss_function_name_1 == 'res_loss_34_5':
+        loss_function_1 = ResNetLoss(i=5, device=device, resnet_model_name='resnet34')
+
+    loss_function_2 = None
+    if len(loss_function_name.split('+')) == 2:
+        loss_function_name_2 = loss_function_name.split('+')[1]
+        if loss_function_name_2 == 'vgg_loss_19_5_4':
+            loss_function_2 = VGGLoss(i=5, j=4, device=device, vgg_model_name='vgg19_bn')
+        elif loss_function_name_2 == 'res_loss_18_4':
+            loss_function_2 = ResNetLoss(i=4, device=device, resnet_model_name='resnet18')
+        elif loss_function_name_2 == 'res_loss_34_3':
+            loss_function_2 = ResNetLoss(i=3, device=device, resnet_model_name='resnet34')
+        elif loss_function_name_2 == 'res_loss_34_5':
+            loss_function_2 = ResNetLoss(i=5, device=device, resnet_model_name='resnet34')
 
     # (1) train phase
     train_mse = 0
@@ -49,7 +62,10 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
         hr_img = hr_img.to(device)
 
         sr_img = generator(lr_img)
-        train_loss = loss_function(hr_img, sr_img)
+        train_loss = loss_function_1(hr_img, sr_img)
+        if loss_function_2:
+            train_loss = train_loss * 0.7
+            train_loss += loss_function_2(hr_img, sr_img) * 0.3
         train_mse += train_loss.item()
 
         # optimization
@@ -74,7 +90,7 @@ def train_and_validate_generator(generator, g_optimizer, epoch, device,
             hr_img = hr_img.to(device)
 
             sr_img = generator(lr_img)
-            valid_loss = loss_function(hr_img, sr_img)
+            valid_loss = loss_function_1(hr_img, sr_img)
             valid_mse += valid_loss.item()
 
             valid_tqdm_loader.set_description(f'Valid-SRResNet | Epoch: {epoch + 1} | '
