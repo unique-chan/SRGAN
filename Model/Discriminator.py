@@ -11,7 +11,7 @@ class Discriminator(nn.Module):
                                        (128, 256, 1), (256, 512, 1), (512, 512, 2)]
         self.input_block = nn.Sequential(
             nn.Conv2d(in_channels=in_channels, out_channels=64, kernel_size=(3, 3),
-                      stride=1, padding=1, bias=False),     # why padding = 1??
+                      stride=1, padding=1, bias=False),
             nn.LeakyReLU(0.2)
         )
         self.conv_blocks = list_to_sequential(
