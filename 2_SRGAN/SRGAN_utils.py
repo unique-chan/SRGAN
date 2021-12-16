@@ -38,13 +38,13 @@ def train_and_validate_SRGAN(generator, g_optimizer, discriminator, d_optimizer,
 
     content_loss_function = nn.MSELoss().to(device)
     if content_loss_function_name == 'vgg_loss_19_5_4':
-        content_loss_function = VGGLoss(i=5, j=4, vgg_model_name='vgg19_bn')
+        content_loss_function = VGGLoss(i=5, j=4, device=device, vgg_model_name='vgg19_bn')
     elif content_loss_function_name == 'res_loss_18_4':
-        content_loss_function = ResNetLoss(i=4, resnet_model_name='resnet18')
+        content_loss_function = ResNetLoss(i=4, device=device, resnet_model_name='resnet18')
     elif content_loss_function_name == 'res_loss_34_3':
-        content_loss_function = ResNetLoss(i=3, resnet_model_name='resnet34')
+        content_loss_function = ResNetLoss(i=3, device=device, resnet_model_name='resnet34')
     elif content_loss_function_name == 'res_loss_34_5':
-        content_loss_function = ResNetLoss(i=5, resnet_model_name='resnet34')
+        content_loss_function = ResNetLoss(i=5, device=device, resnet_model_name='resnet34')
 
     psnr_metric = PSNR()
     ssim_metric = torch_SSIM.MSSSIM()

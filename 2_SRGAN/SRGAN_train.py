@@ -8,7 +8,7 @@ from torch import optim
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from Dataset.dataset import HR_to_HR_LR_PairDataset
+from Dataset.dataset import HR_to_LR_HR_PairDataset
 from Model.Generator import Generator
 from Model.Discriminator import Discriminator
 from SRGAN_parser import Parser
@@ -31,8 +31,8 @@ if __name__ == '__main__':
     device = f'cuda:{my_args.gpu_index}' if my_args.gpu_index >= 0 else 'cpu'
 
     # Loader (Train / Valid)
-    train_dataset = HR_to_HR_LR_PairDataset(train_dir, mode='train', crop_size=128)
-    valid_dataset = HR_to_HR_LR_PairDataset(valid_dir, mode='eval', crop_size=256)
+    train_dataset = HR_to_LR_HR_PairDataset(train_dir, mode='train', crop_size=128)
+    valid_dataset = HR_to_LR_HR_PairDataset(valid_dir, mode='eval', crop_size=256)
     train_loader = DataLoader(train_dataset, my_args.batch_size, shuffle=True, pin_memory=True)
     valid_loader = DataLoader(valid_dataset, my_args.batch_size, shuffle=False, pin_memory=True)
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     discriminator_best_ssim_model_state = discriminator.state_dict()
     d_optimizer = optim.Adam(discriminator.parameters(), lr=my_args.d_lr, betas=(0.9, 0.999))
 
-    generator = Generator(in_channels=3, scaling_factor=4, num_residual_blocks=16)
+    generator = Generator(in_channels=3, num_residual_blocks=16)
     generator.load_state_dict(torch.load(my_args.generator_pt_path))
     generator_best_psnr_model_state = generator.state_dict()
     generator_best_ssim_model_state = generator.state_dict()
