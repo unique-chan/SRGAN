@@ -16,7 +16,7 @@ tensorboardx
 ~~~
 
 ### Toy-Examples
-- This repository provides DIV2K (with only few examples), Set5 and Set14 for convenience. Note that given DIV2K has only few examples, thus you need to download the full DIV2K dataset for training.
+- This repository provides DIV2K (with only few examples) and Set5 for convenience. Note that given DIV2K has only few examples, thus you need to download the full DIV2K dataset for training.
 - You can download DIV2K or other datasets for super-resolution task via internet.
 
 
