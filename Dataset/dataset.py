@@ -4,8 +4,10 @@ import glob
 from torch.utils.data import Dataset
 from torchvision.transforms import transforms, InterpolationMode
 
+pil_to_tensor = transforms.ToTensor()
 
-class HR_to_HR_LR_PairDataset(Dataset):
+
+class HR_to_LR_HR_PairDataset(Dataset):
     def __init__(self, data_path, mode, crop_size=128, rescale_ratio=4):
         self.img_files = sorted(glob.glob(f'{data_path}/*.*'))
         assert len(self.img_files) > 0, "No images exist in the given dataset path."
@@ -37,55 +39,27 @@ class HR_to_HR_LR_PairDataset(Dataset):
         return len(self.img_files)
 
     def __getitem__(self, idx):
-        hr_img = self.HR_transforms(Image.open(self.img_files[idx]))
+        hr_img = self.HR_transforms(Image.open(self.img_files[idx]).convert('RGB'))
         lr_img = self.LR_transforms(hr_img)
         return lr_img, hr_img
 
 
-# [OLD VERSION]
-# class LR_HR_PairDataset(Dataset):
-#     def __init__(self, LR_path, HR_path, mode, crop_size=96):
-#         self.LR_files = sorted(glob.glob(f'{LR_path}/*'))
-#         self.HR_files = sorted(glob.glob(f'{HR_path}/*'))
-#         self.mode = mode    # cases: ['train' | 'eval']
-#         self.crop_size = crop_size
-#         assert len(self.LR_files) == len(self.HR_files), "LR and HR should have same number of images."
-#         assert len(self.LR_files) > 0, "No images exist in the given dataset path."
-#
-#     def __getitem__(self, idx):
-#         if self.mode == 'train':
-#             LR_transform_list = [
-#                 transforms.RandomResizedCrop(self.crop_size, scale=(0.5, 1), ratio=(0.5, 2)),
-#                 transforms.RandomRotation(10),
-#                 transforms.RandomHorizontalFlip(0.5),
-#             ]
-#             HR_transform_list = [
-#                 transforms.RandomResizedCrop(self.crop_size),
-#                 transforms.RandomRotation(10),
-#                 transforms.RandomHorizontalFlip(0.5),
-#             ]
-#         else:   # self.mode == 'eval'
-#             LR_transform_list = [
-#                 transforms.RandomResizedCrop(self.crop_size, scale=(0.5, 1), ratio=(0.5, 2)),
-#             ]
-#             HR_transform_list = [
-#                 transforms.RandomResizedCrop(self.crop_size),
-#             ]
-#
-#         LR_transform_func = transforms.Compose(LR_transform_list + [transforms.ToTensor()])
-#         HR_transform_func = transforms.Compose(HR_transform_list + [transforms.ToTensor()])
-#
-#         LR_img = LR_transform_func(Image.open(self.LR_files[idx]))
-#         print(LR_img.shape)
-#         HR_img = HR_transform_func(Image.open(self.HR_files[idx]))
-#         print(HR_img.shape)
-#
-#         # LR_img = pil_to_tensor(Image.open(self.LR_files[idx]))
-#         # HR_img = pil_to_tensor(Image.open(self.HR_files[idx]))
-#         return LR_img, HR_img
-#
-#     def __len__(self):
-#         return len(self.LR_files)
+class LR_HR_PairDataset(Dataset):
+    def __init__(self, LR_path, HR_path):
+        self.LR_files = sorted(glob.glob(f'{LR_path}/*'))
+        self.HR_files = sorted(glob.glob(f'{HR_path}/*'))
+        print('LR_files:', self.LR_files)
+        assert len(self.LR_files) == len(self.HR_files), "LR and HR should have same number of images."
+        assert len(self.LR_files) > 0, "No images exist in the given dataset path."
+
+    def __len__(self):
+        return len(self.LR_files)
+
+    def __getitem__(self, idx):
+        lr_img = pil_to_tensor(Image.open(self.LR_files[idx]).convert('RGB'))
+        hr_img = pil_to_tensor(Image.open(self.HR_files[idx]).convert('RGB'))
+
+        return lr_img, hr_img
 
 
 # class SingleDataset(Dataset):
