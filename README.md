@@ -76,6 +76,8 @@ tensorboardx
   2. https://pytorch.org/tutorials/beginner/data_loading_tutorial.html (Custom data loader)
   3. https://cvnote.ddlee.cc/2019/09/12/psnr-ssim-python (PSNR, SSIM) ➜ I copied the whole source code from this repo.
   4. https://github.com/jorge-pessoa/pytorch-msssim (SSIM for PyTorch) ➜ I copied the whole source code from this repo.
+
+
 - For debugging
-  4. https://newbedev.com/pytorch-set-grad-enabled-false-vs-with-no-grad
-  5. https://stackoverflow.com/questions/46774641/what-does-the-parameter-retain-graph-mean-in-the-variables-backward-method
+  1. https://newbedev.com/pytorch-set-grad-enabled-false-vs-with-no-grad
+  2. https://stackoverflow.com/questions/46774641/what-does-the-parameter-retain-graph-mean-in-the-variables-backward-method
