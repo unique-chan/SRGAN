@@ -21,6 +21,10 @@ tensorboardx
 - This repository provides DIV2K (with only few examples) and Set5 for convenience. Note that given DIV2K has only few examples, thus you need to download the full DIV2K dataset for training.
 - You can download DIV2K or other datasets for super-resolution task via internet.
 
+### Novelty
+- In this term project, I proposed an efficient content loss based on ResNet, not VGG-Net.
+- See `Report_for_SRGAN.pdf` for details.
+
 
 ### SRResNet (⇔ Generator of SRGAN)
 - (1) `1_SRResNet/SRResNet_train.py`
