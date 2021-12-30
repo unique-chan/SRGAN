@@ -1,5 +1,5 @@
 # SRGAN
-## Unofficial Implementation for "Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Model"
+## Unofficial Implementation for "Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Model (C"
 2021 Fall, Computer Vision (EC5303), Final Term Project
 + ID: 20212047
 + Name: Yechan Kim
